@@ -8,6 +8,7 @@ public class PlayerShoot : MonoBehaviour
     
         [SerializeField] private GameObject bulletPrefab;
         private PlayerMovement playerMovement;
+    float shoottimer;
 
         private void Awake()
         {
@@ -21,12 +22,18 @@ public class PlayerShoot : MonoBehaviour
 
         void Shoot()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+         shoottimer += Time.deltaTime;     
+            if (shoottimer >= 0.5f)
             {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
                 GameObject obj = Instantiate(bulletPrefab);
                 obj.transform.position = transform.position;
                 obj.GetComponent<BulletMovement>().SetDirection(playerMovement.Direction.normalized);
+                shoottimer = 0;
+                }
             }
+            
         }
     
 
